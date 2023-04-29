@@ -1,9 +1,6 @@
 'use strict';
 
-/**
- * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
- * to customize this controller
- */
+const stripe = require('stripe')(process.env.STRIPE_KEY)
 
 module.exports = {
   createPaymentIntent: async (ctx) => {
@@ -14,11 +11,10 @@ module.exports = {
     await Promise.all(
       cart?.map(async (game) => {
         const validatedGame = await strapi.services.game.findOne({
-          id: game.id
+          id: game.id,
         });
-
         if (validatedGame) {
-          games.push(validatedGame)
+          games.push(validatedGame);
         }
       })
     );
@@ -34,6 +30,24 @@ module.exports = {
       return acc + game.price;
     }, 0);
 
-    return { total_in_cents: total * 100, games }
+    if (total === 0) {
+      return {
+        freeGames: true,
+      };
+    }
+
+    try {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: (total * 100).toFixed(),
+        currency: 'usd',
+        automatic_payment_methods: {enabled: true},
+      });
+
+      return paymentIntent;
+    } catch (err) {
+      return {
+        error: err.raw.message,
+      };
+    }
   }
 };
