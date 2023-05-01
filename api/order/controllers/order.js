@@ -40,6 +40,7 @@ module.exports = {
       const paymentIntent = await stripe.paymentIntents.create({
         amount: (total * 100).toFixed(),
         currency: 'usd',
+        metadata: { integration_check: 'accept_a_payment' },
         automatic_payment_methods: {enabled: true},
       });
 
@@ -49,5 +50,30 @@ module.exports = {
         error: err.raw.message,
       };
     }
+  },
+
+  create: async (ctx) => {
+    // pegar as informações do frontend
+    const { cart, paymentIntentId, paymentMethod } = ctx.request.body;
+
+    // pegar o token
+    const token = await strapi.plugins["users-permissions"].services.jwt.getToken(ctx);
+
+    // pega o id do usuário
+    const userId = token.id
+
+    // pega as informações do usuário
+    const userInfo = await strapi
+      .query("user", "users-permissions")
+      .findOne({ id: userId })
+
+    // pegar os jogos
+    // pegar total (saber se é free ou não)
+    // pegar o paymentIntentId
+    // pegar as informações do pagamento (paymentMethod)
+    // salvar no banco
+    // enviar um email da compra para o usuário
+
+    return { cart, paymentIntentId, paymentMethod, userInfo }
   }
 };
