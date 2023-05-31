@@ -14,7 +14,7 @@ const text = `
 `;
 
 const html = `
-  <p>Hi <%= user.username %>, thanks for buying at Won Games!</p>
+  <p>Hi <%= user.username %>, thanks for buying at Won Games!!!</p>
   <p>Follow the info of your order:</p>
   <h3>Card Information</h3>
   <ul>
