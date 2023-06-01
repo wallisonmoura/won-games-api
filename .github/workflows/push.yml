@@ -31,4 +31,3 @@ jobs:
           context: .
           push: true
           tags: wallisonmoura/wongames-api:latest
-      -
