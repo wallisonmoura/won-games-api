@@ -27,4 +27,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: wallisonmoura/wongames-api:latest
+          tags: wallisonmoura/wongames-api:1.1
