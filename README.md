@@ -37,9 +37,10 @@ $ yarn build --clean
 # Run API at localhost:1337/admin
 $ yarn develop
 
+```
 ### 🎨 Screenshots
 <p align="center">
-  <img src="public/screenshots/screenshot_01.png">
-  <img src="public/screenshots/screenshot_03.png">
-  <img src="public/screenshots/screenshot_02.png">
+  <img src="public/screenshots/screenshot_1.png">
+  <img src="public/screenshots/screenshot_3.png">
+  <img src="public/screenshots/screenshot_2.png">
 </p>
